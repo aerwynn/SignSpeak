@@ -1,48 +1,58 @@
 # SignSpeak
 
-SignSpeak is a web app that translates hand gestures into spoken English in real-time. We built this to help people who are non-verbal or have speech impairments communicate more easily.
+SignSpeak is a real-time web application that translates hand gestures into spoken English. We built this to help non-verbal individuals or those with speech impairments communicate more efficiently using computer vision and LLMs.
 
-It uses your webcam to track hand movements, and then passes those gestures to Google's Gemini AI, which puts together a natural-sounding sentence and speaks it out loud.
+It uses a device's webcam to track hand landmarks locally in the browser, accumulates recognized gestures into a buffer, and passes them to Google's Gemini AI. Gemini processes the raw gesture sequence into a contextually accurate, grammatically correct sentence, which is then synthesized into speech.
 
-## How we built it
-- **Frontend:** React and Vite. We use Google MediaPipe for fast, on-device hand tracking right in the browser.
-- **Backend:** Python and FastAPI. This handles the Gemini API integration to build the sentences, and uses Microsoft Edge TTS to generate the voice.
+## System Architecture
+
+The project is split into a client-side React SPA for real-time inference and a Python backend for heavy LLM and TTS processing.
+
+### Frontend (Client-side Inference)
+- **Framework:** React 19, TypeScript, and Vite.
+- **Computer Vision:** We use `@mediapipe/tasks-vision` for on-device hand tracking. By running the inference directly in the browser via WebGL, we achieve 60+ FPS without any network latency for the gesture recognition step.
+- **State Management:** The React app maintains a buffer of recognized words. Once the user hits the spacebar, the buffer is dispatched to the backend.
+
+### Backend (LLM & TTS Pipeline)
+- **API Layer:** Built with FastAPI (Python 3.9+) to provide a lightweight, asynchronous REST interface.
+- **Natural Language Processing:** Uses the `google-genai` SDK (`gemini-3.1-flash-lite` model). When the backend receives an array of raw words (e.g., `["I", "hungry", "food"]`), it prompts Gemini to construct a natural English sentence (`"I am hungry and would like some food."`).
+- **Voice Synthesis:** We use `edge-tts` to convert the generated sentence into a high-quality audio file (mp3) which is streamed back to the frontend for playback.
 
 ## Use Cases
 - Giving a voice to people with conditions like ALS, cerebral palsy, or vocal cord damage.
 - Communicating in places where speaking isn't possible (like super loud environments).
 - Helping patients in intensive care easily tell their caregivers what they need (like "Food", "Water", or "Pain").
 
-## How to run it locally
+## Running the project locally
 
 You'll need Python (3.9+) and Node.js installed on your computer.
 
-### 1. Start the Backend
+### 1. Start the Backend API
 Open a terminal, go into the `backend` folder, and install the Python dependencies:
 ```bash
 pip install -r requirements.txt
 ```
-Then start the server:
+Make sure you have your Gemini API key ready. You can either export it as an environment variable (`GEMINI_API_KEY`) or the app will prompt you for it.
+
+Start the FastAPI server (it runs on port 8000 by default):
 ```bash
 python -m uvicorn app:app --reload
 ```
 *(Leave this terminal running in the background!)*
 
 ### 2. Start the Frontend
-Open a new terminal, go into the `frontend` folder, and install the node packages:
+Open a new terminal, go into the `frontend` folder, and install the dependencies:
 ```bash
 npm install
 ```
-Then start the React app:
+Start the Vite development server:
 ```bash
 npm run dev
 ```
 
-### 3. Using the App
+### 3. Usage
 1. Go to `http://localhost:5173` in your browser.
 2. Allow webcam access when prompted.
 3. Show your hand to the camera to select gestures from the right side of the screen. The app will string the words together at the bottom.
-4. **Hit the SPACEBAR** to have the AI translate your gestures into a complete sentence and speak it!
+4. **Hit the SPACEBAR** to send your gesture buffer to the backend for AI translation and audio playback!
 5. **Press 'C'** if you want to clear your current words and start over.
-
-*Note: Since the backend uses Gemini, you might be asked to paste in your Gemini API key in the terminal the first time you run it.*
