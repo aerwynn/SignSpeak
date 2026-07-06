@@ -1,56 +1,48 @@
-# GestureVoice AI (SignSpeak)
+# SignSpeak
 
-**GestureVoice AI** is a real-time, browser-based accessibility application designed to bridge the communication gap for individuals who are non-verbal or have speech impairments. By leveraging advanced computer vision and Large Language Models, the application translates physical hand gestures into natural, contextually appropriate spoken English.
+SignSpeak is a web app that translates hand gestures into spoken English in real-time. We built this to help people who are non-verbal or have speech impairments communicate more easily.
 
-## 🌟 Key Features
-- **Real-Time Hand Tracking:** Utilizes MediaPipe for 60 FPS on-device hand tracking via WebGL.
-- **AI Sentence Construction:** Uses Google Gemini AI to take raw gesture inputs and construct grammatically correct, natural-sounding sentences.
-- **Text-to-Speech:** Features Microsoft Edge TTS for high-quality, human-like voice synthesis.
-- **Modern UI:** Built with React and Vite featuring a clean, accessible glassmorphism interface.
+It uses your webcam to track hand movements, and then passes those gestures to Google's Gemini AI, which puts together a natural-sounding sentence and speaks it out loud.
 
-## 💡 Primary Use Cases
-- **Assistive Technology:** Provides a voice for individuals with conditions such as ALS, cerebral palsy, or temporary vocal cord damage.
-- **Non-Verbal Communication:** Allows seamless communication in environments where speaking is not possible or appropriate.
-- **Medical & Caregiver Settings:** Enables patients in intensive care to communicate fundamental needs (e.g., "Food", "Water", "Pain") instantly.
+## How we built it
+- **Frontend:** React and Vite. We use Google MediaPipe for fast, on-device hand tracking right in the browser.
+- **Backend:** Python and FastAPI. This handles the Gemini API integration to build the sentences, and uses Microsoft Edge TTS to generate the voice.
 
-## 🛠️ Tech Stack
-- **Frontend:** React, Vite, Google MediaPipe
-- **Backend:** Python, FastAPI, Google Gemini API, Microsoft Edge TTS
+## Use Cases
+- Giving a voice to people with conditions like ALS, cerebral palsy, or vocal cord damage.
+- Communicating in places where speaking isn't possible (like super loud environments).
+- Helping patients in intensive care easily tell their caregivers what they need (like "Food", "Water", or "Pain").
 
-## 🚀 Setup Instructions
+## How to run it locally
 
-### Prerequisites
-- Python (version 3.9 or higher)
-- Node.js
+You'll need Python (3.9+) and Node.js installed on your computer.
 
-### 1. Set up the Python Backend
-1. Open a terminal and navigate to the `backend` folder.
-2. Install the required Python libraries:
-   ```bash
-   pip install -r requirements.txt
-   ```
-3. Start the Python server:
-   ```bash
-   python -m uvicorn app:app --reload
-   ```
-*(Keep this terminal open, it needs to stay running!)*
+### 1. Start the Backend
+Open a terminal, go into the `backend` folder, and install the Python dependencies:
+```bash
+pip install -r requirements.txt
+```
+Then start the server:
+```bash
+python -m uvicorn app:app --reload
+```
+*(Leave this terminal running in the background!)*
 
-### 2. Set up the React Frontend
-1. Open a second, new terminal window and navigate to the `frontend` folder.
-2. Install the necessary Node packages:
-   ```bash
-   npm install
-   ```
-3. Start the website:
-   ```bash
-   npm run dev
-   ```
+### 2. Start the Frontend
+Open a new terminal, go into the `frontend` folder, and install the node packages:
+```bash
+npm install
+```
+Then start the React app:
+```bash
+npm run dev
+```
 
-## 🎮 How to Use
-1. Open your web browser and go to `http://localhost:5173`.
-2. Allow the browser to access your webcam.
-3. Show your hand to the camera to build a sentence using the gestures shown on the right side of the screen. The application will track your hand landmarks and accumulate the translated words into a sentence buffer.
-4. **Press `SPACEBAR`** to have the AI translate your gestures into a natural English sentence and speak it out loud!
-5. **Press `C`** to clear your current gesture buffer.
+### 3. Using the App
+1. Go to `http://localhost:5173` in your browser.
+2. Allow webcam access when prompted.
+3. Show your hand to the camera to select gestures from the right side of the screen. The app will string the words together at the bottom.
+4. **Hit the SPACEBAR** to have the AI translate your gestures into a complete sentence and speak it!
+5. **Press 'C'** if you want to clear your current words and start over.
 
-*Note: Since the backend uses Gemini AI, you will need a valid Gemini API key. The application will prompt you to enter one in the terminal the first time you run it.*
+*Note: Since the backend uses Gemini, you might be asked to paste in your Gemini API key in the terminal the first time you run it.*
