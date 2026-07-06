@@ -81,7 +81,8 @@ export default function App() {
     wordAddedRef.current = true;
 
     try {
-      const response = await fetch("http://localhost:8000/api/speak", {
+      const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
+      const response = await fetch(`${API_URL}/api/speak`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ words: wordsToSpeak })
