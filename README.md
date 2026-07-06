@@ -10,7 +10,7 @@ The project is split into a client-side React SPA for real-time inference and a 
 
 ### Frontend (Client-side Inference)
 - **Framework:** React 19, TypeScript, and Vite.
-- **Computer Vision:** We use `@mediapipe/tasks-vision` for on-device hand tracking. By running the inference directly in the browser via WebGL, we achieve 60+ FPS without any network latency for the gesture recognition step.
+- **Computer Vision:** We use `@mediapipe/tasks-vision` for on-device hand tracking. Running inference directly in the browser via WebGL allows for real-time gesture recognition without any network latency.
 - **State Management:** The React app maintains a buffer of recognized words. Once the user hits the spacebar, the buffer is dispatched to the backend.
 
 ### Backend (LLM & TTS Pipeline)
