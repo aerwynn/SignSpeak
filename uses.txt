@@ -1,0 +1,40 @@
+GestureVoice AI: Project Overview and Instructions
+=================================================
+
+1. Project Description
+-----------------------
+GestureVoice AI is a real-time, browser-based accessibility application designed to bridge the communication gap for individuals who are non-verbal or have speech impairments. By leveraging advanced computer vision (MediaPipe) and large language models (Google Gemini AI), the application translates physical hand gestures into natural, contextually appropriate spoken English.
+
+The architecture is divided into two primary components:
+- Frontend (React / Vite): Captures webcam video, runs 60 FPS on-device hand-tracking via WebGL, detects both standard and custom hand gestures, and renders a glassmorphism UI.
+- Backend (FastAPI / Python): Acts as the intelligence layer. It receives the accumulated gestures, utilizes the Gemini API to formulate a grammatically correct and natural-sounding sentence, and uses Microsoft Edge TTS to synthesize high-quality human speech.
+
+2. Primary Use Cases
+-----------------------
+- Assistive Technology: Provides a voice for individuals with conditions such as ALS, cerebral palsy, or temporary vocal cord damage.
+- Non-Verbal Communication: Allows seamless communication in environments where speaking is not possible or appropriate (e.g., extremely noisy industrial settings, libraries, or underwater contexts if adapted).
+- Medical and Caregiver Settings: Enables patients in intensive care or those who are intubated to communicate fundamental needs (e.g., "Food", "Water", "Pain", "Bathroom") to their caregivers instantly.
+
+3. Technical Setup Instructions
+-----------------------
+Dependencies:
+- Python 3.9+
+- Node.js
+
+Backend Initialization:
+1. Navigate to the `backend` directory.
+2. Execute `pip install -r requirements.txt` to install the server and AI dependencies.
+3. Start the FastAPI server by running `python -m uvicorn app:app --reload`.
+
+Frontend Initialization:
+1. Navigate to the `frontend` directory.
+2. Execute `npm install` to download React and MediaPipe dependencies.
+3. Start the development server by running `npm run dev`.
+
+4. Application Usage
+-----------------------
+1. Access the application via a modern web browser at `http://localhost:5173`.
+2. Grant the browser permission to access the web camera.
+3. Perform any of the registered gestures (e.g., Open Palm, Victory Sign, Pinky Only) within the camera frame. The application will track the hand landmarks and accumulate the translated words into a sentence buffer at the bottom of the screen.
+4. Press the `SPACEBAR` key to transmit the gesture sequence to the Gemini AI backend, which will construct and speak the final sentence.
+5. Press the `C` key to clear the current gesture buffer.
