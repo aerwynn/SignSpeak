@@ -1,6 +1,6 @@
 # SignSpeak
 
-SignSpeak is a real-time web application that translates hand gestures into spoken English. We built this to help non-verbal individuals or those with speech impairments communicate more efficiently using computer vision and LLMs.
+SignSpeak is a real-time web application that translates hand gestures into spoken English. I built this to help non-verbal individuals or those with speech impairments communicate more efficiently using computer vision and LLMs.
 
 It uses a device's webcam to track hand landmarks locally in the browser, accumulates recognized gestures into a buffer, and passes them to Google's Gemini AI. Gemini processes the raw gesture sequence into a contextually accurate, grammatically correct sentence, which is then synthesized into speech.
 
