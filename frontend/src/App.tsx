@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { FilesetResolver, GestureRecognizer, DrawingUtils } from '@mediapipe/tasks-vision';
 import { gestureLabelToWord, detectTwoHandCombo, detectCustomGesture } from './lib/gestureUtils';
 import { Mic } from 'lucide-react';
