@@ -1,0 +1,5 @@
+api_key.txt
+api_key_groq.txt
+__pycache__/
+node_modules/
+.env
